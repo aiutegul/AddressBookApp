@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,6 +15,7 @@ namespace AddressBookApp
     public partial class Form1 : Form
     {
         addressbookEntities db;
+        private ServiceHost Host;
         public Form1()
         {
             InitializeComponent();
@@ -93,6 +95,17 @@ namespace AddressBookApp
 
                 MessageBox.Show("Contact Deleted!");
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Host = new ServiceHost(typeof(ABService));
+            Host.Open();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Host.Close();
         }
     }
 }
